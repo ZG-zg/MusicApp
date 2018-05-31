@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="zg.com.musicapp.Activity.MusicListActivity">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/bt_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/back"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:text="本地音乐"
+            android:textSize="35sp"
+            android:layout_marginLeft="85dp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/music_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1.0"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <RadioGroup
+            android:id="@android:id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="#004b97">
+
+            <Button
+                android:id="@+id/bt_last"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/last"
+                android:layout_marginRight="60dp"/>
+            <Button
+                android:id="@+id/bt_play_stop"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/pause"/>
+            <Button
+                android:id="@+id/bt_next"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/next"/>
+        </RadioGroup>
+
+    </LinearLayout>
+
+</LinearLayout>
