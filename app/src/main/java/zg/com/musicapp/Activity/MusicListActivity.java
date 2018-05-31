@@ -79,9 +79,11 @@ public class MusicListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(medioPlayer.isPlaying()&&!isPause){
                     medioPlayer.pause();
+                    bt_play_stop.setBackgroundResource(R.drawable.pause);
                     isPause=true;
                 }else{
                     medioPlayer.start();
+                    bt_play_stop.setBackgroundResource(R.drawable.play);
                     isPause=false;
                 }
             }
@@ -98,6 +100,7 @@ public class MusicListActivity extends AppCompatActivity {
                     play(--count);
                     isPause=false;
                 }
+                bt_play_stop.setBackgroundResource(R.drawable.play);
             }
         });
         //设置点击下一首的按钮
@@ -112,6 +115,7 @@ public class MusicListActivity extends AppCompatActivity {
                     play(++count);
                     isPause=false;
                 }
+                bt_play_stop.setBackgroundResource(R.drawable.play);
             }
         });
 
@@ -132,9 +136,22 @@ public class MusicListActivity extends AppCompatActivity {
     public void play(int position){
         String item="";
         if(i.equals("1")) {
+            if(position>=mMusicList.size()){
+                position = 0;
+            }
+            else if(position<0){
+                position =mMusicList.size()-1;
+            }
+
             item = mMusicList.get(position).getSongUri();
         }
         else if(i.equals("2")) {
+            if(position>=resultList.size()){
+                position = 0;
+            }
+            else if(position<0){
+                position =resultList.size()-1;
+            }
             String songmid = resultList.get(position).getSongmid();
             item = "http://ws.stream.qqmusic.qq.com/C100"+songmid+".m4a?fromtag=0&guid=126548448";
         }
@@ -145,6 +162,7 @@ public class MusicListActivity extends AppCompatActivity {
             medioPlayer.setDataSource(item);
             medioPlayer.prepare();
             medioPlayer.start();
+            bt_play_stop.setBackgroundResource(R.drawable.play);
         } catch (IOException e) {
             e.printStackTrace();
         }
