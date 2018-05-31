@@ -1,21 +1,26 @@
 package zg.com.musicapp.Activity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import zg.com.musicapp.Adaptar.SaveUserInfo;
+import zg.com.musicapp.DatabaseUtile.MyDataBaseHelper;
+import zg.com.musicapp.Fragment.UserFragment;
 import zg.com.musicapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText edit_user;
     EditText edit_pwd;
-    Button bt;
+    Button bt,bt_zhuce;
     private String muser;
     private String mpwd;
     SaveUserInfo s = new SaveUserInfo();
@@ -34,10 +39,18 @@ public class MainActivity extends AppCompatActivity {
         edit_pwd = (EditText) findViewById(R.id.edit_pwd);
         data();
         bt = (Button) findViewById(R.id.bt);
+        bt_zhuce = (Button) findViewById(R.id.bt_zhuce);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 jump();
+            }
+        });
+        bt_zhuce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+                startActivity(intent);
             }
         });
     }
@@ -68,7 +81,11 @@ public class MainActivity extends AppCompatActivity {
     private void jump() {
         if(judge()){
             saveUserInfo();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("username", muser);
+            //Intent intent = new Intent(this, UserFragment.class);
             Intent intent = new Intent(this, MainFragmentActivity.class);
+            intent.putExtras(bundle);
             startActivity(intent);
             finish();
         }
@@ -79,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean judge() {
         muser = edit_user.getText().toString();
         mpwd = edit_pwd.getText().toString();
+        String selectQuery = "select id,username,password from user where username=?";
         if(muser.equals("")){
             Toast.makeText(this, "用户名为空", Toast.LENGTH_SHORT).show();
             return false;
@@ -87,14 +105,35 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "密码为空", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(muser.length()<11||!muser.equals("18084057634")){
-            Toast.makeText(this, "用户名有误", Toast.LENGTH_SHORT).show();
+        if(queryData(selectQuery,muser)){
+            Toast.makeText(this, "用户名有误或用户不存在", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(!mpwd.equals("123456")){
+        selectQuery = "select id,username,password from user where username='"+muser+"' and password=?";
+        Log.d("zgquerdata", "queryData: "+muser);
+        if(queryData(selectQuery,mpwd)){
             Toast.makeText(this, "密码有误", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
+    }
+    private boolean queryData( String selectQuery,String value){
+        boolean flag  = true;
+        //String selectQuery = "select id,username,password from user where username=?";
+        MyDataBaseHelper dbh = new MyDataBaseHelper(this,"user",null,3);
+        SQLiteDatabase db = dbh.getReadableDatabase();
+        Log.d("zgquerdata", "queryData: "+value);
+        Cursor cursor = db.rawQuery(selectQuery,new String[]{String.valueOf(value)});
+        while(cursor.moveToNext()){
+            int id = cursor.getInt(cursor.getColumnIndex("id"));
+            String username = cursor.getString(cursor.getColumnIndex("username"));
+            String password   = cursor.getString(cursor.getColumnIndex("password"));
+            Log.d("zg", "queryData: "+id+"-"+username+"-"+password);
+        }
+        if(cursor.getCount()>0)
+            flag = false;
+        cursor.close();
+        db.close();
+        return flag;
     }
 }

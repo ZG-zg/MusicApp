@@ -5,16 +5,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context="zg.com.musicapp.Activity.Main2Activity">
 
-    <TextView
-        android:id="@+id/show_user"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用户名："/>
+        <EditText
+            android:id="@+id/edit_user"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:hint="请输入用户名"
+            android:maxLength="11"
+            android:inputType="text"
+            android:textColor="#0000ff"
+            android:text=""
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="密码："/>
+        <EditText
+            android:id="@+id/edit_pwd"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:maxLength="16"
+
+            android:textColor="#0000ff"
+            android:text=""
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定密码："/>
+        <EditText
+            android:id="@+id/edit_pwd_again"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:hint="请确定密码"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:textColor="#0000ff"
+            android:text=""
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+    <Button
+        android:id="@+id/bt_zhuce"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:textColor="#ff0000"/>
-    <TextView
-        android:id="@+id/show_pwd"
+        android:layout_height="wrap_content"
+        android:text="注册"
+        android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/bt_login"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:textColor="#ff0000"/>
+        android:layout_height="wrap_content"
+        android:text="返回登录"
+        android:layout_gravity="center"/>
+    </LinearLayout>
+
 </LinearLayout>

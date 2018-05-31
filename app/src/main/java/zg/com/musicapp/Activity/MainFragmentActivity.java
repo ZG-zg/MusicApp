@@ -37,7 +37,7 @@ public class MainFragmentActivity extends FragmentActivity {
     Button bt_3;
     @Bind(R.id.bt_user)
     Button bt_user;
-
+    private static String name ;
     private static List<Song> mSongList ;
 
     public static List<Song> getmSongList() {
@@ -47,12 +47,19 @@ public class MainFragmentActivity extends FragmentActivity {
     public static void setmSongList(List<Song> mSongList) {
         MainFragmentActivity.mSongList = mSongList;
     }
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        MainFragmentActivity.name = name;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_fragment);
         ButterKnife.bind(this);
+        name = getIntent().getStringExtra("username");
         initview();
     }
 
@@ -88,6 +95,7 @@ public class MainFragmentActivity extends FragmentActivity {
                 break;
         }
     }
+
 
 
 }
