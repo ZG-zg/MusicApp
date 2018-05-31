@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -94,9 +95,11 @@ public class ShouyeFragment extends Fragment {
             public void onClick(View v) {
                 if(mediaPlayer.isPlaying()&&!isPause){
                     mediaPlayer.pause();
+                    bt_play_stop.setBackgroundResource(R.drawable.pause);
                     isPause=true;
                 }else{
                     mediaPlayer.start();
+                    bt_play_stop.setBackgroundResource(R.drawable.play);
                     isPause=false;
                 }
             }
@@ -112,6 +115,7 @@ public class ShouyeFragment extends Fragment {
                     play(--count);
                     isPause=false;
                 }
+                bt_play_stop.setBackgroundResource(R.drawable.play);
             }
         });
         bt_next.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +129,7 @@ public class ShouyeFragment extends Fragment {
                     play(++count);
                     isPause=false;
                 }
+                bt_play_stop.setBackgroundResource(R.drawable.play);
             }
         });
 
@@ -180,6 +185,12 @@ public class ShouyeFragment extends Fragment {
         }
     };
     public void play(int position){
+        if(position>=mSongList.size()){
+            position = 0;
+        }
+        else if(position<0){
+            position =mSongList.size()-1;
+        }
         mSongList1.add(mSongList.get(position));//将播放的音乐信息放入最近播放列表
         String songmid = mSongList.get(position).getSongmid();
         Uri uri = Uri
@@ -191,6 +202,7 @@ public class ShouyeFragment extends Fragment {
             //mediaPlayer = MediaPlayer.create(getContext(),uri);
             mediaPlayer.prepare();
             mediaPlayer.start();
+            bt_play_stop.setBackgroundResource(R.drawable.play);
         } catch (IOException e) {
             e.printStackTrace();
         }
